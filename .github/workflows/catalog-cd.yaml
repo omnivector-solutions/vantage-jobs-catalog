@@ -1,0 +1,92 @@
+name: Build and Publish Job Scripts
+
+on:
+  workflow_dispatch:
+    inputs:
+      job-script-names:
+        description: Comma-separated list of job script names to build and publish
+        required: true
+        type: string
+
+jobs:
+  catalog-cd:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.8.0'
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          cache: 'poetry'
+
+      - name: Install Poetry
+        uses: Gr1N/setup-poetry@v8
+        with:
+          poetry-version: 1.8.0
+
+      - name: Install CDK
+        run: |
+          npm install -g aws-cdk@2.162.1
+
+      - name: Cache cdk.out
+        uses: actions/cache@v4
+        with:
+          path: cdk.out
+          key: cdk-out
+
+      - name: Setup AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.S3_BUCKET_REGION }}
+
+      - name: Install Python packages
+        run: |
+          poetry install --with=infra
+
+      - name: Install Apptainer
+        run: |
+          sudo apt install -y software-properties-common
+          sudo add-apt-repository -y ppa:apptainer/ppa
+          sudo apt-update
+          sudo apt install -y apptainer
+
+      - name: Configure settings
+        run: |
+          poetry run builder settings set \
+          --aws-access-key-id ${{ secrets.AWS_ACCESS_KEY_ID }} \
+          --aws-secret-access-key ${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+          --s3-bucket ${{ vars.S3_BUCKET }} \
+          --s3-bucket-region ${{ vars.S3_BUCKET_REGION }}
+
+      - name: Build job scripts images
+        run: |
+          job_script_names="${{ github.event.inputs.job-script-names }}"
+          job_script_names_spaced=$(echo $job_script_names | sed 's/,/ /g')
+          poetry run builder --verbose apptainer build $job_script_names_spaced
+
+      - name: Publish job scripts images
+        run: |
+          job_script_names="${{ github.event.inputs.job-script-names }}"
+          job_script_names_spaced=$(echo $job_script_names | sed 's/,/ /g')
+          poetry run builder --verbose apptainer publish $job_script_names_spaced
+
+      - name: Publish job scripts artifacts
+        run: |
+          job_script_names="${{ github.event.inputs.job-script-names }}"
+          job_script_names_spaced=$(echo $job_script_names | sed 's/,/ /g')
+          poetry run builder --verbose files publish $job_script_names_spaced
+
+      - name: Generate the catalog.yaml file
+        run: |
+          poetry run builder --verbose catalog generate
+
+      - name: Publish the catalog.yaml file
+        run: |
+          cdk deploy --require-approval never VantageJobsCatalogWebsite
