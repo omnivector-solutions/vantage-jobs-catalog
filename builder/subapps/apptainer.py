@@ -37,7 +37,7 @@ def build(
     job_scripts = find_job_scripts(job_scripts)
     check_existing_paths(job_scripts)
     tasks = [build_image(job_script_path, dry_run) for job_script_path in job_scripts]
-    asyncio.run(run_tasks_concurrently(tasks))  # use asyncio for building images concurrently
+    asyncio.run(run_tasks_concurrently(tasks))
     terminal_message("Built Apptainer images successfully", "Process Complete")
 
 
@@ -54,7 +54,7 @@ def publish(
     ] = None,
     dry_run: bool = typer.Option(False, help="Do not publish the images, only print the commands."),
 ):
-    """Publish the built Apptainer .sif files for each job script imputed."""
+    """Publish the built Apptainer .sif files for each job script supplied."""
     ctx_obj = ctx.obj
     assert isinstance(ctx_obj, CliContext)
     settings = ctx_obj.settings
@@ -63,6 +63,8 @@ def publish(
     job_scripts = find_job_scripts(job_scripts)
 
     check_sif_exists(job_scripts)
-    tasks = [publish_image(job_script_path, settings, dry_run) for job_script_path in job_scripts]
-    asyncio.run(run_tasks_concurrently(tasks))  # use asyncio for publishing images concurrently
+    tasks = [
+        publish_image(job_script_path, settings, dry_run, ctx_obj.verbose) for job_script_path in job_scripts
+    ]
+    asyncio.run(run_tasks_concurrently(tasks))
     terminal_message("Published Apptainer images successfully", "Process Complete")

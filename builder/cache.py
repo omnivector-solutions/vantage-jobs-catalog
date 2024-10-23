@@ -21,7 +21,7 @@ def init_cache(func):
             info_file.write_text("This directory is used by Vantage Jobs Catalog CLI for its cache.")
         except Exception:
             raise Abort(
-                """
+                f"""
                 Cache directory {cache_dir} doesn't exist, is not writable, or could not be created.
 
                 Please check your home directory permissions and try again.

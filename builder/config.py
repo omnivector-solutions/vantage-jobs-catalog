@@ -32,12 +32,14 @@ def init_settings(**settings_values):
         return Settings(**settings_values)
     except ValidationError as err:
         raise Abort(
-            snick.conjoin(
-                "A configuration error was detected.",
-                "",
-                "Details:",
-                "",
-                f"[red]{err}[/red]",
+            snick.dedent(
+                f"""
+                A configuration error was detected.
+
+                Details:
+
+                [red]{err}[/red]
+                """
             ),
             subject="Configuration Error",
             log_message="Configuration error",

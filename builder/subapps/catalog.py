@@ -9,6 +9,7 @@ from builder.context import CliContext
 from builder.exceptions import handle_abort
 from builder.format import render_json, terminal_message
 from builder.subapps.helpers import find_job_scripts, load_job_script_metadata
+from builder.types import JobScriptCatalog
 
 app = typer.Typer()
 
@@ -18,7 +19,13 @@ app = typer.Typer()
 @attach_settings
 def generate_catalog_file(
     ctx: typer.Context,
-    dry_run: bool = typer.Option(False, help="Do not generate the catalog file, only print the commands."),
+    dry_run: bool = typer.Option(
+        False,
+        help=(
+            "Do not generate the catalog file, only print the commands. "
+            "Use in conjunction with the --verbose flag for enhanced debugging."
+        ),
+    ),
 ):
     """Generate a catalog.yaml file."""
     ctx_obj = ctx.obj
@@ -29,27 +36,36 @@ def generate_catalog_file(
     job_scripts_paths = find_job_scripts()
     logger.debug(f"Found {len(job_scripts_paths)} job scripts: {[path.name for path in job_scripts_paths]}")
 
-    catalog: dict[str, list[dict[str, list[str | None] | list[str] | str | None]]] = {"job-scripts": []}
+    catalog: JobScriptCatalog = {"job-scripts": []}
 
     for job_script_path in job_scripts_paths:
         metadata = load_job_script_metadata(job_script_path)
 
-        apptainer_image_url: list[str | None]
+        apptainer_image_urls: list[str | None]
         if metadata.image_source is None:
             logger.warning(f"No image source found for {job_script_path.name}")
-            apptainer_image_url = [None]
+            apptainer_image_urls = [None]
         elif metadata.image_source == "Dockerfile":
             if metadata.image_tags is None:
-                apptainer_image_url = [
+                apptainer_image_urls = [
                     f"oras://public.ecr.aws/omnivector-solutions/{job_script_path.name}:latest"
                 ]
             else:
-                apptainer_image_url = [
+                apptainer_image_urls = [
                     f"oras://public.ecr.aws/omnivector-solutions/{job_script_path.name}:{tag}"
                     for tag in metadata.image_tags
                 ]
         else:
-            apptainer_image_url = [metadata.image_source]
+            apptainer_image_urls = [metadata.image_source]
+
+        supporting_files_urls = (
+            [
+                f"s3://{settings.s3_bucket}/files/{job_script_path.name}/{supporting_file.name}"
+                for supporting_file in metadata.supporting_files
+            ]
+            if metadata.supporting_files
+            else []
+        )
 
         catalog_item = {
             "name": job_script_path.name,
@@ -57,13 +73,8 @@ def generate_catalog_file(
             "icon-url": metadata.icon_url,
             "description": job_script_path.joinpath("README.md").read_text(),
             "entrypoint-file-url": f"s3://{settings.s3_bucket}/files/{job_script_path.name}/{metadata.entrypoint.name}",
-            "supporting-files-urls": [
-                f"s3://{settings.s3_bucket}/files/{job_script_path.name}/{supporting_file.name}"
-                for supporting_file in metadata.supporting_files
-            ]
-            if metadata.supporting_files
-            else [],
-            "apptainer-image-url": apptainer_image_url,
+            "supporting-files-urls": supporting_files_urls,
+            "apptainer-image-urls": apptainer_image_urls,
         }
         catalog["job-scripts"].append(catalog_item)
         logger.debug(f"Added {job_script_path.name} to the catalog")

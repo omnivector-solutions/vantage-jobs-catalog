@@ -43,7 +43,7 @@ def publish(
 
     check_metadata_exists(job_scripts)
     tasks = [publish_files(job_script_path, settings, dry_run) for job_script_path in job_scripts]
-    asyncio.run(run_tasks_concurrently(tasks))  # use asyncio for publishing files concurrently
+    asyncio.run(run_tasks_concurrently(tasks))
     terminal_message(
         f"Published auxiliary files to the bucket {settings.s3_bucket}",
         "Process Complete",

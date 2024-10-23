@@ -1,7 +1,5 @@
 """Main module for the Vantage Jobs Catalog CLI app."""
 
-from __future__ import annotations
-
 import snick
 import typer
 
@@ -31,10 +29,12 @@ def main(
     """
     if ctx.invoked_subcommand is None:
         terminal_message(
-            snick.conjoin(
-                "No command provided. Please check [bold magenta]usage[/bold magenta]",
-                "",
-                f"[yellow]{ctx.get_help()}[/yellow]",
+            snick.dedent(
+                f"""
+                No command provided. Please check [bold magenta]usage[/bold magenta]
+
+                [yellow]{ctx.get_help()}[/yellow]
+                """
             ),
             subject="Need a command",
         )

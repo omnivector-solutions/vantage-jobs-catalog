@@ -1,4 +1,4 @@
-"""Core module for apptainer related operations."""
+"""Core module for defining auxiliary functions of the commands."""
 
 import asyncio
 import base64
@@ -21,35 +21,26 @@ from builder.tools import run_command, run_command_logged
 
 def check_existing_paths(paths: list[Path]) -> bool:
     """Check if the given paths exist."""
-    if not all(path.exists() for path in paths):
-        raise Abort(
-            f"Some of the paths in {[path.name for path in paths]} do not exist",
-            subject="Path does not exist",
-            log_message="Some of the paths do not exist",
-        )
+    with Abort.check_expressions(
+        f"Some of the paths in {[path.name for path in paths]} do not exist",
+        raise_kwargs={
+            "subject": "Path does not exist",
+            "log_message": "Some of the paths do not exist",
+        },
+    ) as checker:
+        for path in paths:
+            checker(path.exists(), f"{path.name} does not exist")
     return True
 
 
 def check_sif_exists(paths: list[Path]) -> bool:
     """Check if the given parent paths have a child .sif file in them."""
-    if not all(path.joinpath("output.sif").exists() for path in paths):
-        raise Abort(
-            f"Some of the paths in {[path.name for path in paths]} do not have a output.sif file",
-            subject="Path does not have a output.sif file",
-            log_message="Some of the paths do not have a output.sif file",
-        )
-    return True
+    return check_existing_paths([path.joinpath("output.sif") for path in paths])
 
 
 def check_metadata_exists(paths: list[Path]) -> bool:
     """Check if the given parent paths have a child metadata.yaml file in them."""
-    if not all(path.joinpath("metadata.yaml").exists() for path in paths):
-        raise Abort(
-            f"Some of the paths in {[path.name for path in paths]} do not have a metadata.yaml file",
-            subject="Path does not have a metadata.yaml file",
-            log_message="Some of the paths do not have a metadata.yaml file",
-        )
-    return True
+    return check_existing_paths([path.joinpath("metadata.yaml") for path in paths])
 
 
 def find_job_scripts(paths: list[Path] | None = None) -> list[Path]:
@@ -90,8 +81,6 @@ async def build_image(job_script_path: Path, dry_run: bool = False):
             "log_message": f"Failed to build Docker image from {job_script_path}",
         },
     ):
-        logger.debug(f"Loading metadata.yaml from {job_script_path}")
-
         logger.debug(f"Building local docker image from {job_script_path}")
         docker_client = docker.from_env()
         tag = f"{job_script_path.name}:latest"
@@ -121,12 +110,15 @@ async def build_image(job_script_path: Path, dry_run: bool = False):
     terminal_message(final_message, "Image Built Successfully")
 
 
-async def publish_image(job_script_path: Path, settings: Settings, dry_run: bool = False):
+async def publish_image(
+    job_script_path: Path, settings: Settings, dry_run: bool = False, verbose: bool = False
+):
     """Publish an Apptainer image to a remote registry."""
     logger.debug(f"Loading metadata.yaml from {job_script_path}")
     metadata = load_job_script_metadata(job_script_path)
     logger.debug("Metadata loaded successfully:")
-    render_json(metadata.model_dump(mode="json"))
+    if verbose:
+        render_json(metadata.model_dump(mode="json"))
 
     logger.debug("Examining the metadata to identify the image source")
     image_source = metadata.image_source
