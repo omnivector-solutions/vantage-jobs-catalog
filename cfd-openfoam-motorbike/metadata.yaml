@@ -1,4 +1,5 @@
 summary: Compute steady flow around a motorcycle
+icon-url: https://upload.wikimedia.org/wikipedia/commons/4/48/OpenFOAM_logo.svg
 entrypoint: job-script.sh
 image-source: Dockerfile
 image-tags:
