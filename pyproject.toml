@@ -1,0 +1,48 @@
+[tool.poetry]
+name = "vantage-jobs-catalog"
+version = "0.1.0"
+description = "Vantage Jobs Catalog"
+authors = ["Omnivector Solutions <info@omnivector.solutions>"]
+readme = "README.md"
+packages = [{ include = "builder" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+typer = "^0.12.5"
+snick = "^1.3.0"
+loguru = "^0.7.2"
+py-buzz = "^4.2.0"
+docker = "^7.1.0"
+pyyaml = "^6.0.2"
+pydantic = "^2.9.2"
+boto3 = "^1.35.41"
+boto3-stubs = {extras = ["ecr-public", "s3"], version = "^1.35.41"}
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.11.1"
+ruff = "^0.5.7"
+types-pyyaml = "^6.0.12.20240917"
+
+[tool.poetry.group.infra.dependencies]
+aws-cdk-lib = "^2.162.1"
+constructs = "^10.4.2"
+
+[tool.poetry.scripts]
+builder = "builder.main:app"
+
+[tool.ruff]
+line-length = 110
+extend-exclude = ["__pycache__", "*.egg_info", "__init__.py"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "C", "N", "D", "I001", "I"]
+ignore = ["D213", "D211", "D203", "C408"]
+fixable = ["ALL"]
+
+[tool.mypy]
+follow_imports = "silent"
+ignore_missing_imports = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
