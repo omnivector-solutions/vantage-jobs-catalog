@@ -53,9 +53,7 @@ Example:
 ```yaml
 # metadata.yaml
 summary: Compute steady flow around a motorcycle
-icon-url: ""
 entrypoint: job-script.sh
-supporting-files: []
 image-source: Dockerfile
 image-tags:
 - "1.0.0"
