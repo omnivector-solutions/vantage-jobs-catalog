@@ -170,11 +170,9 @@ async def publish_image(
                 repositoryName=image_name,
             )
         except ecr.exceptions.RepositoryNotFoundException:
-            raise Abort(
-                f"There is no repository for {image_name=}",
-                subject="Publish failed",
-                log_message=f"There is no repository for {image_name=}",
-            )
+            logger.warning(f"Repository {image_name} not found. Creating it")
+            if not dry_run:
+                ecr.create_repository(repositoryName=image_name)
 
         logger.debug("Logging into the ECR Public registry via Apptainer")
         command = (
