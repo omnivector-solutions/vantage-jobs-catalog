@@ -19,15 +19,15 @@ jobs:
         with:
           node-version: '22.8.0'
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          cache: 'poetry'
-
       - name: Install Poetry
         uses: Gr1N/setup-poetry@v8
         with:
           poetry-version: 1.8.0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          cache: 'poetry'
 
       - name: Install CDK
         run: |
@@ -54,7 +54,7 @@ jobs:
         run: |
           sudo apt install -y software-properties-common
           sudo add-apt-repository -y ppa:apptainer/ppa
-          sudo apt-update
+          sudo apt update
           sudo apt install -y apptainer
 
       - name: Configure settings
