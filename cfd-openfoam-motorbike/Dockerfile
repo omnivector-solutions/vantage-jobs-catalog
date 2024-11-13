@@ -13,6 +13,9 @@ RUN apt install -y openfoam11
 
 RUN bash -c "source /opt/openfoam11/etc/bashrc"
 
+RUN mkdir -p /.singularity.d/env/
+RUN echo ". /opt/openfoam11/etc/bashrc" >> /.singularity.d/env/91-environment.sh
+
 EXPOSE 8080
 
 CMD ["/bin/bash"]
