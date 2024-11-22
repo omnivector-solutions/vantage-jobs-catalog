@@ -1,7 +1,9 @@
 summary: Benchmark using HPCG
 icon-url: https://www.hpcg-benchmark.org/images/header.gif
-entrypoint: job-script.sh
+entrypoint: hpcg.sh
+supporting-files:
+  - HPCG.dat
 image-source: Dockerfile
 image-tags:
-- "1.0.0"
-- "latest"
+  - "1.0.0"
+  - "latest"
