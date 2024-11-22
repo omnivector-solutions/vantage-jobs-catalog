@@ -1,0 +1,7 @@
+summary: Benchmark using HPCG
+icon-url: https://www.hpcg-benchmark.org/images/header.gif
+entrypoint: job-script.sh
+image-source: Dockerfile
+image-tags:
+- "1.0.0"
+- "latest"

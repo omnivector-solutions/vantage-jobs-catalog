@@ -1,0 +1,7 @@
+summary: Benchmark using HPL
+icon-url: https://netlib.org/benchmark/hpl/2-273x48.jpg
+entrypoint: job-script.sh
+image-source: Dockerfile
+image-tags:
+- "1.0.0"
+- "latest"
