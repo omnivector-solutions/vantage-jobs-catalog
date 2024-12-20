@@ -15,7 +15,7 @@ RUN spack load hpl %aocc
 
 RUN mkdir /hpl
 WORKDIR /hpl
-COPY HPL.dat .
+COPY HPL.dat.txt ./HPL.dat
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

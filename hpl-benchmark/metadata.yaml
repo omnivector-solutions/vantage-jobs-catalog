@@ -2,7 +2,7 @@ summary: Benchmark using HPL
 icon-url: https://netlib.org/bib/netlib4.gif
 entrypoint: hpl.sh
 supporting-files:
-  - HPL.dat
+  - HPL.dat.txt
 image-source: Dockerfile
 image-tags:
   - "1.0.0"

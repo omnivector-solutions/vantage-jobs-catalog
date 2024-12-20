@@ -15,6 +15,6 @@ COPY Make.ubuntu /hpl/Make.ubuntu
 RUN make arch=ubuntu
 WORKDIR "/hpl/bin/ubuntu"
 
-COPY HPL.dat HPL.dat
+COPY HPL.dat.txt HPL.dat
 
 CMD ["bash"]

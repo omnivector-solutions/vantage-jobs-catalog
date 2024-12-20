@@ -2,7 +2,7 @@ summary: Benchmark using HPL built with AMD compilers
 icon-url: https://logosmarcas.net/wp-content/uploads/2020/03/AMD-Logo.png
 entrypoint: hpl-aocc.sh
 supporting-files:
-  - HPL.dat
+  - HPL.dat.txt
 image-source: Dockerfile
 image-tags:
   - "1.0.0"

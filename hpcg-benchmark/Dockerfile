@@ -23,5 +23,6 @@ COPY Make.ubuntu setup/
 RUN make arch=ubuntu
 
 WORKDIR /hpcg/bin
+COPY HPCG.dat.txt hpcg.dat
 
 CMD ["bash"]

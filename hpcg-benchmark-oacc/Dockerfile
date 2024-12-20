@@ -14,7 +14,7 @@ RUN spack install hpcg%aocc +openmp ^openmpi fabrics=auto
 RUN spack load hpcg %aocc
 RUN mkdir /hpcg
 WORKDIR /hpcg
-COPY HPCG.dat .
+COPY HPCG.dat.txt ./HPCG.dat
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
