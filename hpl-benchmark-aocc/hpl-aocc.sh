@@ -18,7 +18,7 @@ export APPTAINER_IMAGE=/nfs/mnt/hpl_aocc.sif
 if [[ ! -f $APPTAINER_IMAGE ]]
 then
     echo "Pulling the singularity image"
-    apptainer pull $APPTAINER_IMAGE oras://public.ecr.aws/omnivector-solutions/benchmark:hpl-oacc-ubuntu22
+    apptainer pull $APPTAINER_IMAGE oras://public.ecr.aws/omnivector-solutions/hpl-benchmark-aocc:latest
 else
     echo "Skipping the image fetch process...we already have the singularity image"
 fi

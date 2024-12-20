@@ -18,10 +18,9 @@ export APPTAINER_IMAGE=/nfs/mnt/hpl.sif
 if [[ ! -f $APPTAINER_IMAGE ]]
 then
     echo "Pulling the singularity image"
-    apptainer pull $APPTAINER_IMAGE oras://public.ecr.aws/omnivector-solutions/benchmark:hpl-ubuntu22
+    apptainer pull $APPTAINER_IMAGE oras://public.ecr.aws/omnivector-solutions/hpl-benchmark:latest
 else
     echo "Skipping the image fetch process...we already have the singularity image"
 fi
 
 apptainer exec $APPTAINER_IMAGE sh -c "/hpl/bin/ubuntu/xhpl"
-# srun --mpi=pmix -N2 /usr/bin/apptainer exec $APPTAINER_IMAGE sh -c "/hpl/bin/ubuntu/xhpl"

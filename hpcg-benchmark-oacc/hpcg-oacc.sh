@@ -18,7 +18,7 @@ export APPTAINER_IMAGE=/nfs/mnt/vantage-jobs-catalog-hpcg_oacc.sif
 if [[ ! -f $APPTAINER_IMAGE ]]
 then
     echo "Pulling the singularity image"
-    apptainer pull $APPTAINER_IMAGE oras://public.ecr.aws/omnivector-solutions/benchmark:hpcg-oacc-ubuntu22
+    apptainer pull $APPTAINER_IMAGE oras://public.ecr.aws/omnivector-solutions/hpcg-benchmark-aocc:latest
 else
     echo "Skipping the image fetch process...we already have the singularity image"
 fi
