@@ -3,8 +3,7 @@ icon-url: https://logosmarcas.net/wp-content/uploads/2020/03/AMD-Logo.png
 entrypoint: hpcg-oacc.sh
 supporting-files:
   - HPCG.dat.txt
-image-source:
-  - Dockerfile
+image-source: Dockerfile
 image-tags:
   - "1.0.0"
   - "latest"
