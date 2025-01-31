@@ -42,7 +42,7 @@ Several options for customization are available to tailor the benchmark to diffe
 
 - **Configuration Parameters**: You can modify the `HPL.dat` file to adjust parameters such as matrix size, block size, and process grid layout.
 
-  1. Download and edit the [HPL.dat](https://omnivector-public-assets.s3.us-west-2.amazonaws.com/catalog/HPL.dat) file.
+  1. Download and edit the [HPL.dat](https://vantage-public-assets.s3.us-west-2.amazonaws.com/catalog/HPL.dat) file.
   2. Customize the parameters as needed.
   3. Upload the modified `HPL.dat` file for use in your benchmark.
 

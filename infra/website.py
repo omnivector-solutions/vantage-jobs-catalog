@@ -17,13 +17,13 @@ class WebsiteStack(Stack):
     def __init__(self, app: App, id: str, **kwargs):  # noqa: D107
         super().__init__(app, id, **kwargs)
 
-        site_domain = "catalog.vantagehpc.io"
+        site_domain = "catalog.vantagecompute.ai"
 
         hosted_zone = route53.HostedZone.from_hosted_zone_attributes(
             self,
             "HostedZone",
-            hosted_zone_id="Z063993623YJJ3OLAC1Z6",
-            zone_name="vantagehpc.io",
+            hosted_zone_id="Z076740924E27W77EXSVN",
+            zone_name="vantagecompute.ai",
         )
 
         distribution_oai = cloudfront.OriginAccessIdentity(
