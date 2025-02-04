@@ -22,7 +22,7 @@ class ArtifactBucket(Stack):
         bucket = s3.Bucket(
             self,
             "ArtifactBucket",
-            bucket_name="vantage-jobs-catalog-artifacts",
+            bucket_name="vantage-compute-jobs-catalog-artifacts",
             removal_policy=cdk.RemovalPolicy.RETAIN,
             block_public_access=s3.BlockPublicAccess(
                 block_public_acls=True,

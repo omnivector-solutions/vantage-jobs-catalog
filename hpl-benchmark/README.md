@@ -42,7 +42,7 @@ The script offers several customization options:
 
 - **Configuration Parameters**: Editing _HPL.dat_ to modify the default params:
 
-  1. Download the [HPL.dat](https://omnivector-public-assets.s3.us-west-2.amazonaws.com/catalog/HPL.dat);
+  1. Download the [HPL.dat](https://vantage-public-assets.s3.us-west-2.amazonaws.com/catalog/HPL.dat);
   2. Modify the HPL.dat as needed;
   3. Upload the HPL.dat as a support file.
 

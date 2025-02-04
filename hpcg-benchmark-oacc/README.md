@@ -42,7 +42,7 @@ Several options for customization are available to tailor the benchmark to diffe
 
 - **Configuration Parameters**: You can modify the `HPCG.dat` file to adjust parameters such as grid dimensions.
 
-  1. Download and edit the [HPCG.dat](https://omnivector-public-assets.s3.us-west-2.amazonaws.com/catalog/HPCG.dat) file.
+  1. Download and edit the [HPCG.dat](https://vantage-public-assets.s3.us-west-2.amazonaws.com/catalog/HPCG.dat) file.
   2. Customize the parameters as needed.
   3. Upload the modified `HPCG.dat` file for use in your benchmark.
 
