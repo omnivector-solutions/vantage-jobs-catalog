@@ -42,7 +42,7 @@ The script offers several customization options:
 
 - **Configuration Parameters:** Edit the `HPCG.dat` file to modify the benchmark settings:
 
-  1. Download the [HPCG.dat](https://omnivector-public-assets.s3.us-west-2.amazonaws.com/catalog/HPCG.dat);
+  1. Download the [HPCG.dat](https://vantage-public-assets.s3.us-west-2.amazonaws.com/catalog/HPCG.dat);
   2. Modify the `HPCG.dat` as needed;
   3. Place the customized file in the working directory or bind it during execution.
 
