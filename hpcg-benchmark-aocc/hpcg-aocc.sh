@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J HPCG_oacc
+#SBATCH -J HPCG_aocc
 #SBATCH --ntasks=2
 #SBATCH --output=/nfs/mnt/jobs/%u/%x-Job-%j/R-%x.%j.out
 #SBATCH --error=/nfs/mnt/jobs/%u/%x-Job-%j/R-%x.%j.err
@@ -15,8 +15,8 @@ export APPTAINER_IMAGES_DIR=$APPTAINER_DIR/images
 export APPTAINER_BINDPATH=/nfs
 export TMPDIR=$APPTAINER_TMPDIR
 
-export REMOTE_APPTAINER_IMAGE="oras://public.ecr.aws/omnivector-solutions/hpcg-benchmark-oacc:latest"
-export LOCAL_APPTAINER_IMAGE=$APPTAINER_IMAGES_DIR/vantage-jobs-catalog-hpcg_oacc.sif
+export REMOTE_APPTAINER_IMAGE="oras://public.ecr.aws/omnivector-solutions/hpcg-benchmark-aocc:latest"
+export LOCAL_APPTAINER_IMAGE=$APPTAINER_IMAGES_DIR/vantage-jobs-catalog-hpcg_aocc.sif
 export WORK_DIR=/nfs/mnt/jobs/$USER/$SLURM_JOB_NAME-Job-$SLURM_JOB_ID
 
 mkdir -p $APPTAINER_TMPDIR $APPTAINER_CACHEDIR $APPTAINER_IMAGES_DIR $WORK_DIR
