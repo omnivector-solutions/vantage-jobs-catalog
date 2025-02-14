@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J HPL_aocc
+#SBATCH -J HPCG_aocc
 #SBATCH --ntasks=2
 #SBATCH --output=/nfs/mnt/jobs/%u/%x-Job-%j/R-%x.%j.out
 #SBATCH --error=/nfs/mnt/jobs/%u/%x-Job-%j/R-%x.%j.err
@@ -15,15 +15,15 @@ export APPTAINER_IMAGES_DIR=$APPTAINER_DIR/images
 export APPTAINER_BINDPATH=/nfs
 export TMPDIR=$APPTAINER_TMPDIR
 
-export REMOTE_APPTAINER_IMAGE="oras://public.ecr.aws/omnivector-solutions/hpl-benchmark-aocc:latest"
-export LOCAL_APPTAINER_IMAGE=$APPTAINER_IMAGES_DIR/vantage-jobs-catalog-hpl-aocc.sif
+export REMOTE_APPTAINER_IMAGE="oras://public.ecr.aws/omnivector-solutions/hpcg-benchmark-aocc:latest"
+export LOCAL_APPTAINER_IMAGE=$APPTAINER_IMAGES_DIR/vantage-jobs-catalog-hpcg_aocc.sif
 export WORK_DIR=/nfs/mnt/jobs/$USER/$SLURM_JOB_NAME-Job-$SLURM_JOB_ID
 
 mkdir -p $APPTAINER_TMPDIR $APPTAINER_CACHEDIR $APPTAINER_IMAGES_DIR $WORK_DIR
 
 # move the HPCG.dat top the Workdir
 cd $WORK_DIR
-mv $SLURM_SUBMIT_DIR/HPL.dat.txt ./HPL.dat
+mv $SLURM_SUBMIT_DIR/HPCG.dat.txt ./HPCG.dat
 
 # download the singularity image if it is not available yet
 if [[ ! -f $LOCAL_APPTAINER_IMAGE ]]
@@ -34,4 +34,4 @@ else
     echo "Skipping the image fetch process...we already have the singularity image"
 fi
 
-apptainer exec $LOCAL_APPTAINER_IMAGE sh -c "/hpl/bin/ubuntu/xhpl"
+apptainer exec $LOCAL_APPTAINER_IMAGE bash -c "source /entrypoint.sh && xhcg"

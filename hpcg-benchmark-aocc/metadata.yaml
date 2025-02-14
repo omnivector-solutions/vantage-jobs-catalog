@@ -1,6 +1,6 @@
 summary: Benchmark using HPCG built with AMD compilers
 icon-url: https://logosmarcas.net/wp-content/uploads/2020/03/AMD-Logo.png
-entrypoint: hpcg-oacc.sh
+entrypoint: hpcg-aocc.sh
 supporting-files:
   - HPCG.dat.txt
 image-source: Dockerfile

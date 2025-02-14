@@ -17,7 +17,7 @@ To successfully run this script, the following system components are required:
 
 The script follows these steps to execute the benchmark:
 
-1. **Create Working Directory**: A unique working directory is created under `/nfs/mnt/hpcg_oacc/` to store data for the specific job run.
+1. **Create Working Directory**: A unique working directory is created under `/nfs/mnt/jobs/$USER/` to store data for the specific job run.
 2. **Fetch Apptainer Image**: If the Apptainer image is not available locally, the script pulls it from a public Amazon ECR repository.
 3. **Run the Benchmark**: The script runs the HPCG benchmark using the pre-configured `HPCG.dat` file inside the Apptainer container.
 
