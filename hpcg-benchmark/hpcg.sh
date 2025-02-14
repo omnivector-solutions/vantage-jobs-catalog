@@ -34,4 +34,4 @@ else
     echo "Skipping the image fetch process...we already have the singularity image"
 fi
 
-apptainer exec $LOCAL_APPTAINER_IMAGE bash -c "source /entrypoint.sh && xhcg"
+apptainer exec $APPTAINER_IMAGE /hpcg/bin/xhpcg
