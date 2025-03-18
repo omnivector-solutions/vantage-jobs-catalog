@@ -3,5 +3,5 @@ icon-url: https://upload.wikimedia.org/wikipedia/commons/4/48/OpenFOAM_logo.svg
 entrypoint: job-script.sh
 image-source: Dockerfile
 image-tags:
-- "2.0.0"
+- "2.1.0"
 - "latest"
