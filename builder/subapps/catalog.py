@@ -48,11 +48,11 @@ def generate_catalog_file(
         elif metadata.image_source == "Dockerfile":
             if metadata.image_tags is None:
                 apptainer_image_urls = [
-                    f"oras://public.ecr.aws/omnivector-solutions/{job_script_path.name}:latest"
+                    f"oras://public.ecr.aws/g5s2h5u4/{job_script_path.name}:latest"
                 ]
             else:
                 apptainer_image_urls = [
-                    f"oras://public.ecr.aws/omnivector-solutions/{job_script_path.name}:{tag}"
+                    f"oras://public.ecr.aws/g5s2h5u4/{job_script_path.name}:{tag}"
                     for tag in metadata.image_tags
                 ]
         else:

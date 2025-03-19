@@ -28,7 +28,7 @@ export APPTAINER_IMAGE=/nfs/mnt/openfoam11.sif
 if [[ ! -f $APPTAINER_IMAGE ]]
 then
     echo "Pulling the singularity image for OpenFOAM-11"
-    apptainer pull $APPTAINER_IMAGE oras://public.ecr.aws/omnivector-solutions/cfd-openfoam-motorbike:latest
+    apptainer pull $APPTAINER_IMAGE oras://public.ecr.aws/g5s2h5u4/cfd-openfoam-motorbike:latest
 else
     echo "Skipping the image fetch process...we already have the singularity image"
 fi
