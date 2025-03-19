@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "vantage-jobs-catalog"
-version = "0.1.1"
+version = "0.2.0"
 description = "Vantage Jobs Catalog"
 authors = ["Omnivector Solutions <info@omnivector.solutions>"]
 readme = "README.md"
